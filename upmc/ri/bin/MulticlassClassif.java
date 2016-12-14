@@ -1,5 +1,6 @@
 package upmc.ri.bin;
 
+import upmc.ri.io.ImageNetParser;
 import upmc.ri.struct.DataSet;
 import upmc.ri.struct.Evaluator;
 import upmc.ri.struct.STrainingSample;
@@ -18,32 +19,28 @@ import java.util.Set;
 
 public class MulticlassClassif {
 
-    static String DEFAULT_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/sbow/";
+    static String DEFAULT_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/datasets/datasets";
 
     public static void main(String[] args) {
 
         try (FileInputStream fis = new FileInputStream(DEFAULT_FILENAME)) {
+
             ObjectInputStream ois = new ObjectInputStream(fis);
             DataSet<double[], String> dataset = null;
+
             try {
                 dataset = (DataSet<double[], String>) ois.readObject();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+            ois.close();
+
             int sizeBow = dataset.listtrain.get(0).input.length;
 
             //instanciation des struct et model
             //setting labels
-            Set<String> labels = new HashSet<String>();
-            labels.add("acoustic_guitar.txt");
-            labels.add("harp.txt");
-            labels.add("taxi.txt");
-            labels.add("minivan.txt");
-            labels.add("wood-frog.txt");
-            labels.add("tree-frog.txt");
-            labels.add("electric_guitar.txt");
-            labels.add("ambulance.txt");
-            labels.add("european_fire_salamander.txt");
+
+            Set<String> labels = ImageNetParser.classesImageNet();
 
             //instantiation IStructinstantiation
             MultiClass multiclass = new MultiClass(labels);
@@ -80,8 +77,6 @@ public class MulticlassClassif {
             }
             multiclass.confusionMatrix(predictions, gt);
 
-
-            ois.close();
 
         } catch (IOException e) {
             e.printStackTrace();

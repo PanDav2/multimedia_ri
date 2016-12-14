@@ -102,7 +102,7 @@ public class ImageNetParser {
 			}
 			res.add(new ImageFeatures(xs, ys, wordsim, id));
 			// 1 line for sikipping BB
-			line = buff.readLine();
+			buff.readLine();
 		}
 		
 		buff.close();
@@ -113,15 +113,15 @@ public class ImageNetParser {
 	
 	public static Set<String> classesImageNet(){
 		Set<String> cl =  new LinkedHashSet<String>();
-		cl.add("taxi");
-		cl.add("ambulance");
-		cl.add("minivan");
-		cl.add("acoustic_guitar");
-		cl.add("electric_guitar");
-		cl.add("harp");
-		cl.add("wood-frog");
-		cl.add("tree-frog");
-		cl.add("european_fire_salamander");
+		cl.add("taxi.txt");
+		cl.add("ambulance.txt");
+		cl.add("minivan.txt");
+		cl.add("acoustic_guitar.txt");
+		cl.add("electric_guitar.txt");
+		cl.add("harp.txt");
+		cl.add("wood-frog.txt");
+		cl.add("tree-frog.txt");
+		cl.add("european_fire_salamander.txt");
 		
 		return cl;
 	}
@@ -134,7 +134,6 @@ public class ImageNetParser {
 		System.out.println("Our retrieved features ! ");
 		List<ImageFeatures> f = getFeatures(DEFAULT_FILENAME);
 		System.out.println(f);
-		System.out.println("Our retrieved  ! ");
 
 	}
 

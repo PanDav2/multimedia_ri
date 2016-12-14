@@ -9,26 +9,29 @@ import upmc.ri.utils.PCA;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
-/**
- * Created by gozuslayer on 11/11/16.
- */
 public class VisualIndexes {
-    public static void main(String[] args) {
-        /*initialisation ListStrainingSample*/
 
-        List<STrainingSample<double[],String>> listtrain =new ArrayList<STrainingSample<double[],String>>();
-        List<STrainingSample<double[],String>> listtest=new ArrayList<STrainingSample<double[],String>>();
+    // Path to computed dataset
+    static String DEFAULT_OUTPUT_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/datasets/datasets";
+    static String DEFAULT_SBOW_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/sbow";
+
+    public static void main(String[] args) {
+
+        List<STrainingSample<double[], String>> listtrain = new ArrayList<STrainingSample<double[], String>>();
+        List<STrainingSample<double[], String>> listtest = new ArrayList<STrainingSample<double[], String>>();
         /*for every file*/
-        File folder = new File("/home/gozuslayer/DAC/DAC2/RI/TP7/RI_2016 (2)/sbow");
+        File folder = new File(DEFAULT_SBOW_FILENAME);
         for (final File file : folder.listFiles()) {
-            System.out.println("computing " + file.getName());
-            try (BufferedReader buff = new BufferedReader(new FileReader(file))){
+            String name = file.getName();
+            System.out.println("computing " + name);
+
+            try (BufferedReader buff = new BufferedReader(new FileReader(file))) {
                 String line;
                 // 1st line : describing file format
                 line = buff.readLine();
                 //here : line ; fileformat
-
                 int i = 0;
                 while ((line = buff.readLine()) != null) {
                     // skipping Image ID
@@ -74,7 +77,6 @@ public class VisualIndexes {
                     //skip line for BB
 
 
-
                     //create Bow
                     ImageFeatures ib = new ImageFeatures(x, y, wordsim, ID);
 
@@ -82,10 +84,8 @@ public class VisualIndexes {
                     double[] trainBow = Bow.computeBow(ib);
 
 
-
-
                     //get label
-                    String Label = file.getName();
+                    String Label = name ;//file.getName();
 
                     //create training example
                     STrainingSample<double[], String> strainingsample = new STrainingSample<double[], String>(trainBow, Label);
@@ -103,26 +103,28 @@ public class VisualIndexes {
 
                 }
                 //System.out.println(i + " images dans " + file.getName());
-            }catch (IOException e) {e.printStackTrace();}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
         }
-        DataSet<double[],String> data = new DataSet<double[],String>(listtrain,listtest);
+        DataSet<double[], String> data = new DataSet<double[], String>(listtrain, listtest);
 
         //PCA
         PCA pca = new PCA();
-        DataSet<double[],String> data_withpca = pca.computePCA(data,250);
+        DataSet<double[], String> data_withpca = pca.computePCA(data, 250);
 
         //serialisation du data set
-        try(FileOutputStream fos = new FileOutputStream("/home/gozuslayer/DAC/DAC2/RI/TP7/sbow/dataset")){
+        try (FileOutputStream fos = new FileOutputStream(DEFAULT_OUTPUT_FILENAME)) {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(data_withpca);
             oos.close();
-        }catch (IOException e) {e.printStackTrace();}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-
-
 
 
 }
