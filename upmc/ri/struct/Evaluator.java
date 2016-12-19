@@ -5,62 +5,58 @@ import java.util.List;
 
 import upmc.ri.struct.model.IStructModel;
 
-public class Evaluator<X,Y> {
-	private List<STrainingSample<X,Y>> listtrain;
-	private List<STrainingSample<X,Y>> listtest;
-	//private IStructInstantiation <X,Y> type;
-	private IStructModel<X,Y> model;
-	
-	private List<Y> pred_train;
-	private List<Y> pred_test;
-	private double err_train;
-	private double err_test;
-	
-	public void evaluate(){
-		err_train=0.0;
-		pred_train = new ArrayList<Y>();
-		// Evaluate training set
-		for(STrainingSample<X,Y> ts : listtrain){
-			Y pred = model.predict(ts);
-			pred_train.add(pred);
-			err_train += model.instantiation().delta(ts.output,pred);
-			System.out.println(ts.output);
-			System.out.println(pred);
-			System.out.println(model.instantiation().delta(ts.output,pred));
+public class Evaluator<X, Y> {
+    private List<STrainingSample<X, Y>> listtrain;
+    private List<STrainingSample<X, Y>> listtest;
+    //private IStructInstantiation <X,Y> type;
+    private IStructModel<X, Y> model;
 
-		}
-		
-		err_train /=listtrain.size();
-		
-		err_test=0.0;
-		pred_test = new ArrayList<Y>();
-		// Evaluate testing set
-		for(STrainingSample<X,Y> ts : listtest){
-			Y pred = model.predict(ts);
-			pred_test.add(pred);
-			err_test += model.instantiation().delta(ts.output,pred);
-		}
-		err_test /=listtest.size();
-	}
+    private List<Y> pred_train;
+    private List<Y> pred_test;
+    private double err_train;
+    private double err_test;
 
-	public double getErr_train() {
-		return err_train;
-	}
+    public void evaluate() {
+        err_train = 0.0;
+        pred_train = new ArrayList<Y>();
+        // Evaluate training set
+        for (STrainingSample<X, Y> ts : listtrain) {
+            Y pred = model.predict(ts);
+            pred_train.add(pred);
+            err_train += model.instantiation().delta(ts.output, pred);
+        }
 
-	public double getErr_test() {
-		return err_test;
-	}
+        err_train = err_train / listtrain.size();
 
-	public void setListtrain(List<STrainingSample<X, Y>> listtrain) {
-		this.listtrain = listtrain;
-	}
+        err_test = 0.0;
+        pred_test = new ArrayList<Y>();
+        // Evaluate testing set
+        for (STrainingSample<X, Y> ts : listtest) {
+            Y pred = model.predict(ts);
+            pred_test.add(pred);
+            err_test += model.instantiation().delta(ts.output, pred);
+        }
+        err_test /= listtest.size();
+    }
 
-	public void setListtest(List<STrainingSample<X, Y>> listtest) {
-		this.listtest = listtest;
-	}
+    public double getErr_train() {
+        return err_train;
+    }
 
-	public void setModel(IStructModel<X, Y> model) {
-		this.model = model;
-	}
+    public double getErr_test() {
+        return err_test;
+    }
+
+    public void setListtrain(List<STrainingSample<X, Y>> listtrain) {
+        this.listtrain = listtrain;
+    }
+
+    public void setListtest(List<STrainingSample<X, Y>> listtest) {
+        this.listtest = listtest;
+    }
+
+    public void setModel(IStructModel<X, Y> model) {
+        this.model = model;
+    }
 
 }

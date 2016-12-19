@@ -13,7 +13,7 @@ import upmc.ri.index.ImageFeatures;
 public class ImageNetParser {
 
 
-	static String DEFAULT_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/data/electric_guitar.txt";
+	static String DEFAULT_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/data/acoustic_guitar.txt";
 
 	public static List<List<Integer>> getWords(String filename) throws Exception{
 		List<List<Integer>> res = new ArrayList<List<Integer>>();
@@ -128,12 +128,12 @@ public class ImageNetParser {
 
 	public static void main(String[] args) throws Exception {
 		//ImageNetParser ip = new ImageNetParser();
-		System.out.println("Our retrieved words ! ");
-		List<List<Integer>> l = getWords(DEFAULT_FILENAME);
-		System.out.println(l);
-		System.out.println("Our retrieved features ! ");
+		//System.out.println("Our retrieved words ! ");
+		//List<List<Integer>> l = getWords(DEFAULT_FILENAME);
+		//System.out.println(l);
+		//System.out.println("Our retrieved features ! ");
 		List<ImageFeatures> f = getFeatures(DEFAULT_FILENAME);
-		System.out.println(f);
+		//System.out.println(f.len);
 
 	}
 

@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+
+#a = pd.read_csv("results_hier.txt",sep="\t")
+#df = a[28:]
+#df.columns = ["idx","it","loss"]
+#np.argmin(df["loss"])
+#df.loc[57]
+
+df = pd.read_csv("results_multiclass.txt",sep='\t')
+
+df.columns = ["iter","train","test"]
+df["train"] =df["train"].apply(lambda x : float(x[:-1]))
+np.argsort(df["train"][2:])
+
+df = df[2:]
+np.argmin(df["train"])
+
+np.argsort(df["train"])
+
+df.iloc[62]

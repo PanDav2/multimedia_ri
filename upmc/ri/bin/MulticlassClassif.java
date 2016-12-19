@@ -12,7 +12,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +19,11 @@ import java.util.Set;
 public class MulticlassClassif {
 
     static String DEFAULT_FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/datasets/datasets";
+//    (double pas, double lambda, int iteration)
+    static double DEFAULT_PAS = 0.001;
+    static double DEFAULT_LAMBDA = 0.001;
+    static int DEFAULT_ITERATION = 100;
+
 
     public static void main(String[] args) {
 
@@ -37,34 +41,39 @@ public class MulticlassClassif {
 
             int sizeBow = dataset.listtrain.get(0).input.length;
 
+
             //instanciation des struct et model
             //setting labels
 
             Set<String> labels = ImageNetParser.classesImageNet();
+            int nbr_labels = labels.size();
+            int params_size = (int) sizeBow*nbr_labels;
 
             //instantiation IStructinstantiation
             MultiClass multiclass = new MultiClass(labels);
 
             //instantiation linear struct
-            LinearStructModel_Ex<double[], String> Linearmodel = new LinearStructModel_Ex(sizeBow, multiclass);
-
+            LinearStructModel_Ex<double[], String> Linearmodel = new LinearStructModel_Ex(params_size, multiclass);
 
             Evaluator<double[], String> evaluator = new Evaluator<>();
 
-            SGDTrainer<double[], String> Sgdtrainer = new SGDTrainer<double[], String>(0.001, 0.001, 100);
-
-            Sgdtrainer.train(dataset.listtrain, Linearmodel);
+            SGDTrainer<double[], String> Sgdtrainer = new SGDTrainer(DEFAULT_PAS, DEFAULT_LAMBDA, DEFAULT_ITERATION);
 
 
+            // TRAINING !!
             evaluator.setListtrain(dataset.listtrain);
             evaluator.setListtest(dataset.listtest);
             evaluator.setModel(Linearmodel);
+            Sgdtrainer.setEvaluator(evaluator);
 
-            evaluator.evaluate();
-            System.out.println("erreur test : " + evaluator.getErr_test());
-            System.out.println("erreur train : " + evaluator.getErr_train());
+            Sgdtrainer.train(dataset.listtrain, Linearmodel);
 
-            //affichage matrice de confusion
+//            evaluator.evaluate();
+//            System.out.println("erreur train : " + evaluator.getErr_train());
+//            System.out.println("erreur test : " + evaluator.getErr_test());
+
+            // CONFUSION MATRIX PRINTING
+            
             //initialisation liste
             List<String> predictions = new ArrayList<>();
             List<String> gt = new ArrayList<>();

@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by gozuslayer on 13/12/16.
- */
 public class RankingInstantiation implements IStructInstantiation<List<double[]>, RankingOutput>{
 
 
-    public double[] psi(List<double[]> x,RankingOutput y){
+    public double[] psi(List<double[]> x, RankingOutput y){
 
         List<Integer> ranks = y.getRanking();
 

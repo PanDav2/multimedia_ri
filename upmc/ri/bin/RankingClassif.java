@@ -16,9 +16,9 @@ import java.io.ObjectInputStream;
 import java.util.List;
 
 
-public class Ranking {
+public class RankingClassif {
 
-    static String FILENAME = "/home/gozuslayer/DAC/DAC2/RI/TP7/sbow/dataset";
+    static String FILENAME = "/Users/david/Documents/Master/M2/RI/final_project/RI_2016 (2)/datasets/datasets";
     static String TEST_SET = "acoustic_guitar.txt";
     static int DEFAULT_DIM_PSI = 200;
     //SGDTrainer(double pas,double lambda,int iteration){
@@ -56,7 +56,6 @@ public class Ranking {
             sgdTrainer.train(datasetforranking.listtrain,rkgmodel);
 
             //tracer courbe précision rappel & AP & MAP
-
 
 
         } catch (IOException e) {

@@ -7,9 +7,6 @@ import upmc.ri.struct.ranking.RankingOutput;
 
 import java.util.*;
 
-/**
- * Created by gozuslayer on 13/12/16.
- */
 public class RankingStructModel extends LinearStructModel<List<double[]>,RankingOutput> {
 
     public RankingStructModel(int dimpsi,IStructInstantiation<List<double[]>,RankingOutput> Structure){

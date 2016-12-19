@@ -15,10 +15,12 @@ public class MultiClassHier extends MultiClass {
 
 
     public MultiClassHier(Set<String> labels){
+        // Variable initialization
         super(labels);
-        //constructor
         int nbrLabel = labels.size();
-        myMap = new HashMap<String,Integer>();
+        this.distances = new double[nbrLabel][nbrLabel];
+        this.myMap = new HashMap<String,Integer>();
+
         int i =0;
         for (String label : labels) {
             myMap.put(label,i);
@@ -26,10 +28,10 @@ public class MultiClassHier extends MultiClass {
         }
 
 
-        //Calcul des distances
+        //Distance calculation
         ILexicalDatabase db = new NictWordNet();
         RelatednessCalculator rc = new WuPalmer(db);
-        this.distances = new double[nbrLabel][nbrLabel];
+
 
         for (String label1 : labels){
             for (String label2 : labels){

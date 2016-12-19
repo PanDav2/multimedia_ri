@@ -24,7 +24,7 @@ public class RankingFunctions {
 			// Computing recall for the ist example : R(i) = #  relevant docs at i / # relevant docs
 			// Computing precision for the ist example : R(i) = #  relevant docs at i / i
 			if(y.getLabelsGT().get(y.getRanking().get(i))==1){
-				// Check is the top ist elet is positive
+				// Check if the top ist elmt is positive
 				top++;
 			}
 			precision.add(top/(double)(i+1));
@@ -98,7 +98,7 @@ public class RankingFunctions {
 		for(int i=0;i< pairsMinus.size() ; i++){
 			sortedMinus.add(pairsMinus.get(i).getKey());
 		}
-		
+
 		// Inserting - examples - in the + list - Optimal greedy algorithm from Yue et.al. "A Support Vector Method for Optimizing Average Precision", SIGIR '07
 		List<Integer> imaxs = new ArrayList<Integer>(Collections.nCopies(nbMinus, 0));
 
